@@ -23,7 +23,7 @@ let modals = {};
  * @param {string} options.src - 地址
  * @return {promise} promise - promise.then(resolve,reject)
  */
-function Modal(options = {}) {
+function ModalFactory(options = {}) {
     let instance;
     let defaultOptions = {
         name: options.name || Math.round(Math.random() * 1000),
@@ -71,6 +71,12 @@ function Modal(options = {}) {
                     .$el
                     .parentNode
                     .removeChild(instance.$el);
+                if(instance.placeholder){
+                    var content = instance.$refs.contentElement.children[0];
+                    content.style.display = "none";
+                    instance.placeholder.parentNode.insertBefore(content,instance.placeholder);
+                    instance.placeholder.parentNode.removeChild(instance.placeholder);
+                }
                 delete modals[defaultOptions.name];
                 resolve(cmd);
             });
@@ -98,4 +104,4 @@ export function close(options) {
     }
 }
 
-export default Modal
+export const Modal = ModalFactory;

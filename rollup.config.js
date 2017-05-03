@@ -4,7 +4,7 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from'rollup-plugin-commonjs';
 
 import vue from 'rollup-plugin-vue2';
-import less from 'rollup-plugin-less';
+import sass from 'rollup-plugin-sass';
 
 import uglify from 'rollup-plugin-uglify';
 
@@ -16,7 +16,7 @@ export default {
     sourceMap: true,
     plugins : [
         vue(),
-        less({
+        sass({
             output:'dist/components.css'
         }),
         //uglify(),

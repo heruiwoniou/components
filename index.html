@@ -21,7 +21,9 @@
     <div>
         <button onclick="WebApi.modal({title: '模态窗口', src: 'test.html' ,width: 800,height: 600})">模态窗口(iframe)</button>
         <button onclick="WebApi.modal({title: '模态窗口', el: document.querySelector('#modal') ,width: 800,height: 600})">模态窗口(element)</button>
-        <div id="modal">
+        <button onclick="WebApi.alert('已经进行了删除操作')">提示窗口(alert)</button>
+        <button onclick="WebApi.confirm('是否进行删除?')">提示窗口(confirm)</button>
+        <div id="modal" style="display:none">
             <h1>Hellow World !</h1>
         </div>
     </div>
