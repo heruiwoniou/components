@@ -1,0 +1,12 @@
+{
+    "opts": {
+        "destination": "./docs"
+    },
+    "plugins": ["plugins/markdown"],
+    "markdown": {
+        "tags": ["mk"]
+    },
+    "templates": {
+        "theme": "simplex"
+    }
+}
