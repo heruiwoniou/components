@@ -14,34 +14,47 @@ let modals = {};
  * @param {number} options.height - 高
  * @param {number} options.titleHeight - 标题高
  * @param {boolean} options.draggable - 是否可拖拽
+ * @param {object} options.padding - 边距
+ * @param {number} options.padding.top - 上边距
+ * @param {number} options.padding.right - 右边距
+ * @param {number} options.padding.bottom - 下边距
+ * @param {number} options.padding.left - 左边距
  * @param {object} options.offset - iframe偏移属性
  * @param {number} options.offset.left - ifrmae左偏移
  * @param {number} options.offset.top - iframe上偏移
  * @param {number} options.borderRadius - 圆角
  * @param {number} options.closeIconSize - 关闭按钮尺寸
  * @param {string} options.background - 背景
+ * @param {string} options.backgroundImage - 中间框背景
  * @param {string} options.src - 地址
  * @return {promise} promise - promise.then(resolve,reject)
  */
 function ModalFactory(options = {}) {
     let instance;
-    let defaultOptions = {
-        name: options.name || Math.round(Math.random() * 1000),
-        title: options.title || '',
-        width: options.width || document.documentElement.offsetWidth,
-        height: options.height || document.documentElement.offsetHeight,
-        titleHeight: options.titleHeight || 60,
-        draggable: options.draggable || true,
-        offset: {
-            top: ( options.offset && options.offset.top ? options.offset.top : 0 ),
-            left: ( options.offset && options.offset.left ? options.offset.left : 0 )
+    let defaultOptions = _.defaultsDeep(options, {
+        name: Math.round(Math.random() * 1000),
+        title: '',
+        width: document.documentElement.offsetWidth,
+        height: document.documentElement.offsetHeight,
+        titleHeight: 60,
+        draggable: true,
+        padding: {
+            top: 10,
+            right: 10,
+            bottom: 10,
+            left: 10
         },
-        closeIconSize: options.closeIconSize || 20,
-        borderRadius: options.borderRadius || 8,
-        background: options.background || 'white',
-        src: options.src || '',
-        titleAlign: options.titleAlign || 'left'
-    };
+        offset: {
+            top: 0,
+            left: 0
+        },
+        closeIconSize: 20,
+        borderRadius: 8,
+        background: 'rgba(255,255,255,.5)',
+        backgroundImage: 'rgba(255,255,255,1)',
+        src: '',
+        titleAlign: 'center'
+    });
     if (modals[defaultOptions.name]) {
         console.error('已存在相同命名的弹框 ' + defaultOptions.name);
     }
@@ -50,18 +63,24 @@ function ModalFactory(options = {}) {
         propsData: defaultOptions
     });
 
-    if(options.el){
+    if (options.el) {
         instance.placeholder = document.createElement('div');
         instance.placeholder.id = 'placeholder-' + instance._uid;
-        options.el.parentNode.insertBefore(instance.placeholder,options.el);
-        instance.$refs.contentElement.appendChild(options.el);
-        options.el.style="display:block";
+        options
+            .el
+            .parentNode
+            .insertBefore(instance.placeholder, options.el);
+        instance
+            .$refs
+            .contentElement
+            .appendChild(options.el);
+        options.el.style = "display:block";
     }
 
     document
         .body
         .appendChild(instance.$el);
-    
+
     modals[defaultOptions.name] = instance;
     return new Promise(function (resolve, reject) {
         instance
@@ -71,11 +90,17 @@ function ModalFactory(options = {}) {
                     .$el
                     .parentNode
                     .removeChild(instance.$el);
-                if(instance.placeholder){
+                if (instance.placeholder) {
                     var content = instance.$refs.contentElement.children[0];
                     content.style.display = "none";
-                    instance.placeholder.parentNode.insertBefore(content,instance.placeholder);
-                    instance.placeholder.parentNode.removeChild(instance.placeholder);
+                    instance
+                        .placeholder
+                        .parentNode
+                        .insertBefore(content, instance.placeholder);
+                    instance
+                        .placeholder
+                        .parentNode
+                        .removeChild(instance.placeholder);
                 }
                 delete modals[defaultOptions.name];
                 resolve(cmd);
