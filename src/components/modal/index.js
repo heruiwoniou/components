@@ -1,8 +1,8 @@
-import Vue from 'vue/dist/vue.js';
-import _ from 'lodash';
-import modalbase from './modal.vue';
-let modalConstructor = Vue.extend(modalbase);
-let modals = {};
+import Vue from 'vue/dist/vue.js'
+import _ from 'lodash'
+import modalbase from './modal.vue'
+let ModalConstructor = Vue.extend(modalbase)
+let modals = {}
 /**
  * create modal
  * @function modal
@@ -29,83 +29,84 @@ let modals = {};
  * @param {string} options.src - 地址
  * @return {promise} promise - promise.then(resolve,reject)
  */
-function ModalFactory(options = {}) {
-    let instance;
-    let defaultOptions = _.defaultsDeep(options, {
-        name: Math.round(Math.random() * 1000),
-        title: '',
-        width: document.documentElement.offsetWidth,
-        height: document.documentElement.offsetHeight,
-        titleHeight: 60,
-        draggable: true,
-        padding: {
-            top: 10,
-            right: 10,
-            bottom: 10,
-            left: 10
-        },
-        offset: {
-            top: 0,
-            left: 0
-        },
-        closeIconSize: 20,
-        borderRadius: 8,
-        background: 'rgba(255,255,255,.5)',
-        backgroundImage: 'rgba(255,255,255,1)',
-        src: '',
-        titleAlign: 'center'
-    });
-    if (modals[defaultOptions.name]) {
-        console.error('已存在相同命名的弹框 ' + defaultOptions.name);
-    }
-    instance = new modalConstructor({
-        el: document.createElement('div'),
-        propsData: defaultOptions
-    });
+function ModalFactory (options = {}) {
+  let instance
+  let defaultOptions = _.defaultsDeep(options, {
+    name: Math.round(Math.random() * 1000),
+    title: '',
+    width: document.documentElement.offsetWidth,
+    height: document.documentElement.offsetHeight,
+    titleHeight: 60,
+    draggable: true,
+    padding: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    },
+    offset: {
+      top: 0,
+      left: 0
+    },
+    closeIconSize: 20,
+    borderRadius: 8,
+    background: 'rgba(255,255,255,1)',
+    backgroundImage: 'rgba(255,255,255,1)',
+    src: '',
+    titleAlign: 'center'
+  })
+  if (modals[defaultOptions.name]) {
+    console.error('已存在相同命名的弹框 ' + defaultOptions.name)
+  }
+  instance = new ModalConstructor({
+    el: document.createElement('div'),
+    propsData: defaultOptions
+  })
 
-    if (options.el) {
-        instance.placeholder = document.createElement('div');
-        instance.placeholder.id = 'placeholder-' + instance._uid;
-        options
-            .el
+  if (options.el) {
+    instance.placeholder = document.createElement('div')
+    instance.placeholder.id = 'placeholder-' + instance._uid
+    options
+      .el
+      .parentNode
+      .insertBefore(instance.placeholder, options.el)
+    instance
+      .$refs
+      .contentElement
+      .appendChild(options.el)
+    options.el.style = 'display:block'
+  }
+
+  document
+    .body
+    .appendChild(instance.$el)
+
+  modals[defaultOptions.name] = instance
+  return new Promise(function (resolve, reject) {
+    instance
+      .open()
+      .then(function (cmd) {
+        instance
+          .$el
+          .parentNode
+          .removeChild(instance.$el)
+        if (instance.placeholder) {
+          var content = instance.$refs.contentElement.children[0]
+          content.style.display = 'none'
+          instance
+            .placeholder
             .parentNode
-            .insertBefore(instance.placeholder, options.el);
-        instance
-            .$refs
-            .contentElement
-            .appendChild(options.el);
-        options.el.style = "display:block";
-    }
-
-    document
-        .body
-        .appendChild(instance.$el);
-
-    modals[defaultOptions.name] = instance;
-    return new Promise(function (resolve, reject) {
-        instance
-            .open()
-            .then(function (cmd) {
-                instance
-                    .$el
-                    .parentNode
-                    .removeChild(instance.$el);
-                if (instance.placeholder) {
-                    var content = instance.$refs.contentElement.children[0];
-                    content.style.display = "none";
-                    instance
-                        .placeholder
-                        .parentNode
-                        .insertBefore(content, instance.placeholder);
-                    instance
-                        .placeholder
-                        .parentNode
-                        .removeChild(instance.placeholder);
-                }
-                delete modals[defaultOptions.name];
-                resolve(cmd);
-            });
-    });
+            .insertBefore(content, instance.placeholder)
+          instance
+            .placeholder
+            .parentNode
+            .removeChild(instance.placeholder)
+        }
+        instance.$destroy()
+        delete modals[defaultOptions.name]
+        resolve(cmd)
+      })
+  })
 }
 
 /**
@@ -116,17 +117,15 @@ function ModalFactory(options = {}) {
  * @param {string} options.name - 窗体名称
  * @param {any} options.cmd - 返回参数
  */
-export function close(options) {
-    if (options && options.name) {
-        modals[options.name].close(options.cmd || '')
-    } else {
-        _
-            .forEach(modals, function (value, key) {
-                modals[key].close(options
-                    ? options
-                    : undefined);
-            })
-    }
+export function close (options) {
+  if (options && options.name) {
+    modals[options.name].close(options.cmd || '')
+  } else {
+    _
+      .forEach(modals, function (value, key) {
+        modals[key].close(options || undefined)
+      })
+  }
 }
 
-export const Modal = ModalFactory;
+export const Modal = ModalFactory

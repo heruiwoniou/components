@@ -1,8 +1,8 @@
-import Vue from 'vue/dist/vue.js';
-import _ from 'lodash';
-import messageBase from './Message.vue';
-let MessageConstructor = Vue.extend(messageBase);
-let alerts = {};
+import Vue from 'vue/dist/vue.js'
+import _ from 'lodash'
+import messageBase from './Message.vue'
+let MessageConstructor = Vue.extend(messageBase)
+let alerts = {}
 
 /**
  * alert message
@@ -19,44 +19,45 @@ let alerts = {};
  * @param {number} options.bottomHeight - 底部按钮框高度
  * @return {promise} promise - promise.then(resolve,reject)
  */
-function AlertFactory(options = {}) {
-    let instance;
-    let defaultOptions = _.defaultsDeep(_.isPlainObject(options)
-        ? options
-        : {
-            message: options
-        }, {
-        name: Math.round(Math.random() * 1000),
-        message: '',
-        title: '消息',
-        width: 400,
-        height: 200,
-        background: 'white',
-        titleHeight: 60,
-        bottomHeight: 60,
-        borderRadius: 8
-    });
-    instance = new MessageConstructor({
-        el: document.createElement('div'),
-        propsData: defaultOptions
-    });
-    document
-        .body
-        .appendChild(instance.$el);
-    alerts[defaultOptions.name] = instance;
+function AlertFactory (options = {}) {
+  let instance
+  let defaultOptions = _.defaultsDeep(_.isPlainObject(options)
+    ? options
+    : {
+      message: options
+    }, {
+      name: Math.round(Math.random() * 1000),
+      message: '',
+      title: '消息',
+      width: 400,
+      height: 200,
+      background: 'white',
+      titleHeight: 60,
+      bottomHeight: 60,
+      borderRadius: 8
+    })
+  instance = new MessageConstructor({
+    el: document.createElement('div'),
+    propsData: defaultOptions
+  })
+  document
+    .body
+    .appendChild(instance.$el)
+  alerts[defaultOptions.name] = instance
 
-    return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
+    instance
+      .open()
+      .then(function (cmd) {
         instance
-            .open()
-            .then(function (cmd) {
-                instance
-                    .$el
-                    .parentNode
-                    .removeChild(instance.$el);
-                delete alerts[defaultOptions.name];
-                resolve(cmd);
-            });
-    });
+          .$el
+          .parentNode
+          .removeChild(instance.$el)
+        instance.$destroy()
+        delete alerts[defaultOptions.name]
+        resolve(cmd)
+      })
+  })
 }
 
 /**
@@ -74,56 +75,57 @@ function AlertFactory(options = {}) {
  * @param {number} options.borderRadius - 圆角
  * @return {promise} promise - promise.then(resolve,reject)
  */
-function ConfirmFactory(options = {}) {
-    let instance;
-    let defaultOptions = _.assign({
-        name: Math.round(Math.random() * 1000),
-        message: '',
-        title: '消息',
-        width: 400,
-        height: 200,
-        background: 'white',
-        titleHeight: 60,
-        bottomHeight: 60,
-        borderRadius: 8,
-        buttons: [
-            {
-                cls: 'sure',
-                cmd: 'sure',
-                txt: '确认'
-            }, {
-                cls: 'cancel',
-                cmd: 'cancel',
-                txt: '取消'
-            }
-        ]
-    }, _.isPlainObject(options)
-        ? options
-        : {
-            message: options
-        });
-    instance = new MessageConstructor({
-        el: document.createElement('div'),
-        propsData: defaultOptions
-    });
-    document
-        .body
-        .appendChild(instance.$el);
-    alerts[defaultOptions.name] = instance;
+function ConfirmFactory (options = {}) {
+  let instance
+  let defaultOptions = _.assign({
+    name: Math.round(Math.random() * 1000),
+    message: '',
+    title: '消息',
+    width: 400,
+    height: 200,
+    background: 'white',
+    titleHeight: 60,
+    bottomHeight: 60,
+    borderRadius: 8,
+    buttons: [
+      {
+        cls: 'sure',
+        cmd: 'sure',
+        txt: '确认'
+      }, {
+        cls: 'cancel',
+        cmd: 'cancel',
+        txt: '取消'
+      }
+    ]
+  }, _.isPlainObject(options)
+    ? options
+    : {
+      message: options
+    })
+  instance = new MessageConstructor({
+    el: document.createElement('div'),
+    propsData: defaultOptions
+  })
+  document
+    .body
+    .appendChild(instance.$el)
+  alerts[defaultOptions.name] = instance
 
-    return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
+    instance
+      .open()
+      .then(function (cmd) {
         instance
-            .open()
-            .then(function (cmd) {
-                instance
-                    .$el
-                    .parentNode
-                    .removeChild(instance.$el);
-                delete alerts[defaultOptions.name];
-                resolve(cmd);
-            });
-    });
+          .$el
+          .parentNode
+          .removeChild(instance.$el)
+        instance.$destroy()
+        delete alerts[defaultOptions.name]
+        resolve(cmd)
+      })
+  })
 }
 
-export const Alert = AlertFactory;
-export const Confirm = ConfirmFactory;
+export const Alert = AlertFactory
+export const Confirm = ConfirmFactory
