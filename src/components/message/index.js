@@ -1,5 +1,3 @@
-import Vue from 'vue/dist/vue.js'
-import _ from 'lodash'
 import messageBase from './Message.vue'
 let MessageConstructor = Vue.extend(messageBase)
 let alerts = {}

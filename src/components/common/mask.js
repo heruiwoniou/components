@@ -1,4 +1,3 @@
-import _ from 'lodash'
 export let maskManager = {
   zIndex: 5000,
   masks: [],

@@ -1,5 +1,3 @@
-import Vue from 'vue/dist/vue.js'
-import _ from 'lodash'
 import modalbase from './modal.vue'
 let ModalConstructor = Vue.extend(modalbase)
 let modals = {}
@@ -74,7 +72,7 @@ function ModalFactory (options = {}) {
       .$refs
       .contentElement
       .appendChild(options.el)
-    options.el.style = 'display:block'
+    options.el.style.display = 'block'
   }
 
   document
