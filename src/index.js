@@ -1,3 +1,4 @@
+import 'es6-promise/auto'
 import Vue from 'vue/dist/vue.js'
 import * as d3 from 'd3'
 import Lodash from 'lodash'

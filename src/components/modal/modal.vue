@@ -10,7 +10,14 @@
           {{ title }}
           <a href="javascript:;"
              :style="styleTitleClose"
-             @click="close"></a>
+             @click="close">
+             <svg height="100%" width="100%" :viewbox="'0 0' + closeIconSize + ' ' + closeIconSize ">
+               <g>
+                 <path fill="none" stroke-width="1" stroke="#161616" :d="'M0,0L' + closeIconSize + ',' + closeIconSize"></path>
+                 <path fill="none" stroke-width="1" stroke="#161616" :d="'M' + closeIconSize + ',0L0,' + closeIconSize"></path>
+               </g>
+             </svg>
+          </a>
         </div>
         <div class="vue-modal-status"
              :style="styleContent"
@@ -405,27 +412,12 @@ export default {
             font-weight: bold;
             a{
                 position: absolute;
-                transform: rotate3d(0,0,1,45deg) scale3d(0, 0, 0);
+                transform: scale3d(0, 0, 0);
                 transition: transform .2s cubic-bezier(0.2,1,0.3,1); 
-                &:before,&:after{
-                    content: '';
-                    background: #161616;
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                }
-                &:before{
-                    content: '';
-                    width: 140%;
-                    height: 2px;
-                    margin-left: -70%;
-                    margin-top: -1px;
-                }
-                &:after{
-                    height: 140%;
-                    width: 2px;
-                    margin-left: -1px;
-                    margin-top: -70%;
+                font-size: 0;
+                svg{
+                  display: inline-block;
+                  vertical-align: top;
                 }
             }
         }
@@ -461,7 +453,7 @@ export default {
                 opacity: 1;
             }
             .vue-modal-title a{
-                transform: rotate3d(0,0,1,45deg) scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
             }
         }
         .vue-modal-background{
