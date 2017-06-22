@@ -74,7 +74,7 @@ function ModalFactory (options = {}) {
       .$refs
       .contentElement
       .appendChild(options.el)
-    options.el.style = 'display:block'
+    options.el.style.display = 'block'
   }
 
   document
