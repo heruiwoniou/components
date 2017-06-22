@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="dist/components.css">
+  <script src="dist/components.js"></script>
+  <style>
+    html,
+    body {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <button onclick="WebApi.modal({title: '模态窗口', src: 'test.html' ,width: 800,height: 600})">模态窗口(iframe)</button>
+    <button onclick="WebApi.modal({title: '模态窗口', background:'rgba(255, 255, 255, .5)', backgroundImage:'url(mask.png)', padding: { top: 10, right: 10, bottom: 10, left: 10 }, src: 'test.html' ,width: 800,height: 600})">模态窗口(iframe)</button>
+    <button onclick="WebApi.modal({title: '模态窗口', el: document.querySelector('#modal') ,width: 800,height: 600})">模态窗口(element)</button>
+    <button onclick="WebApi.modal({title: '模态窗口', background:'rgba(255, 255, 255, .5)', backgroundImage:'url(mask.png)', padding: { top: 10, right: 10, bottom: 10, left: 10 }, el: document.querySelector('#modal') ,width: 800,height: 600})">模态窗口(element)</button>
+    <button onclick="WebApi.alert('已经进行了删除操作')">提示窗口(alert)</button>
+    <button onclick="WebApi.confirm('是否进行删除?')">提示窗口(confirm)</button>
+    <button onclick="WebApi.confirm({ title: '系统消息', buttons: [{ cls: 'save', cmd: 'save', txt: '保存' }, { cls: 'sure', cmd: 'sure', txt: '确认' }, { cls: 'cancel', cmd: 'cancel', txt: '取消' }]})">自定义(message)</button>
+    <div id="modal" style="display:none">
+      <h1>Hellow World !</h1>
+    </div>
+  </div>
+</body>
+<script>
+  window.onload = function () {
+    new Vue({
+      el: 'body > div'
+    })
+  }
+
+</script>
+
+</html>
