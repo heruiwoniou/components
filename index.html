@@ -7,6 +7,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <link rel="stylesheet" href="dist/components.css">
+  <script src="node_modules/vue/dist/vue.min.js"></script>
+  <script src="node_modules/lodash/lodash.min.js"></script>
+  <script src="node_modules/d3/build/d3.min.js"></script>
   <script src="dist/components.js"></script>
   <style>
     html,
@@ -20,6 +23,8 @@
 
 <body>
   <div>
+    <button onclick="WebApi.modal({title: '模态窗口', src: 'test.html'})">全屏模态(iframe)</button>
+    <button onclick="WebApi.modal({title: '模态窗口', resize: true, src: 'test.html' ,width: 800,height: 600})">可缩放模态窗口(iframe)</button>
     <button onclick="WebApi.modal({title: '模态窗口', src: 'test.html' ,width: 800,height: 600})">模态窗口(iframe)</button>
     <button onclick="WebApi.modal({title: '模态窗口', background:'rgba(255, 255, 255, .5)', backgroundImage:'url(mask.png)', padding: { top: 10, right: 10, bottom: 10, left: 10 }, src: 'test.html' ,width: 800,height: 600})">模态窗口(iframe)</button>
     <button onclick="WebApi.modal({title: '模态窗口', el: document.querySelector('#modal') ,width: 800,height: 600})">模态窗口(element)</button>

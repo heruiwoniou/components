@@ -10,6 +10,7 @@ let modals = {}
  * @param {string} options.title - 标题
  * @param {number} options.width - 宽度
  * @param {number} options.height - 高
+ * @param {boolean} options.resize - 是否可缩放大小
  * @param {number} options.titleHeight - 标题高
  * @param {boolean} options.draggable - 是否可拖拽
  * @param {object} options.padding - 边距
@@ -34,6 +35,7 @@ function ModalFactory (options = {}) {
     title: '',
     width: document.documentElement.offsetWidth,
     height: document.documentElement.offsetHeight,
+    resize: false,
     titleHeight: 60,
     draggable: true,
     padding: {
