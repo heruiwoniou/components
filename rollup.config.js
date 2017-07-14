@@ -9,7 +9,6 @@ import sass from 'rollup-plugin-sass'
 import clean from 'postcss-clean'
 import autoprefixer from 'autoprefixer'
 
-
 import uglify from 'rollup-plugin-uglify'
 
 export default {
@@ -25,7 +24,7 @@ export default {
       processor: css => postcss([autoprefixer, clean]).process(css).then(result => result.css)
     }),
     uglify(),
-    nodeResolve({jsnext: true, main: true, browser: true}),
+    nodeResolve({ jsnext: true, main: true, browser: true }),
     commonjs({
       exclude: ['node_modules/vue/**', 'node_modules/lodash/**', 'node_modules/d3/**']
     }),

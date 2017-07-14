@@ -1,3 +1,5 @@
+import Vue from 'vue/dist/vue.js'
+import _ from 'lodash'
 import modalbase from './modal.vue'
 let ModalConstructor = Vue.extend(modalbase)
 let modals = {}

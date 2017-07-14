@@ -1,3 +1,5 @@
+import Vue from 'vue/dist/vue.js'
+import _ from 'lodash'
 import messageBase from './Message.vue'
 let MessageConstructor = Vue.extend(messageBase)
 let alerts = {}
@@ -24,16 +26,16 @@ function AlertFactory (options = {}) {
     : {
       message: options
     }, {
-      name: Math.round(Math.random() * 1000),
-      message: '',
-      title: '消息',
-      width: 400,
-      height: 200,
-      background: 'white',
-      titleHeight: 60,
-      bottomHeight: 60,
-      borderRadius: 8
-    })
+    name: Math.round(Math.random() * 1000),
+    message: '',
+    title: '消息',
+    width: 400,
+    height: 200,
+    background: 'white',
+    titleHeight: 60,
+    bottomHeight: 60,
+    borderRadius: 8
+  })
   instance = new MessageConstructor({
     el: document.createElement('div'),
     propsData: defaultOptions
