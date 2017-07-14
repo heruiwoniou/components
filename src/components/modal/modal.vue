@@ -6,7 +6,14 @@
           {{ title }}
           <a class="normal" v-if="resize && !status" href="javascript:;" :style="styleTitleFullToggle" @click="statusSwitch"></a>
           <a class="full" v-if="resize && status" href="javascript:;" :style="styleTitleFullToggle" @click="statusSwitch"></a>
-          <a class="close" href="javascript:;" :style="styleTitleClose" @click="close"></a>
+          <a class="close" href="javascript:;" :style="styleTitleClose" @click="close">
+            <svg height="100%" width="100%" :viewbox="'0 0' + closeIconSize + ' ' + closeIconSize ">
+              <g>
+                <path fill="none" stroke-width="2" stroke="#161616" :d="'M0,0L' + closeIconSize + ',' + closeIconSize"></path>
+                <path fill="none" stroke-width="2" stroke="#161616" :d="'M' + closeIconSize + ',0L0,' + closeIconSize"></path>
+              </g>
+            </svg>
+          </a>
         </div>
         <div class="vue-modal-status" :style="styleContent" v-show="moving">
           <svg t="1493353365923" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="20%" fill="rgba(0,0,0,.1)">
@@ -323,7 +330,7 @@ export default {
         setTimeout(() => {
           this.width = this.screenWidth
           this.height = this.screenHeight
-          this.moveOffset.x = 0 
+          this.moveOffset.x = 0
           this.moveOffset.y = 0
           this.$el.className = 'vue-modal is-show'
           resolve()
@@ -485,28 +492,13 @@ export default {
           position: absolute;
           transition: transform .2s cubic-bezier(0.2,1,0.3,1); 
           &.close{
-            transform: rotate3d(0,0,1,45deg) scale3d(0, 0, 0);
-            &:before,&:after{
-              content: '';
-              background: #161616;
-              position: absolute;
-              left: 50%;
-              top: 50%;
+            transform: scale3d(0, 0, 0);
+            font-size: 0;
+            svg{
+              display: inline-block;
+              vertical-align: top;
             }
-            &:before{
-              content: '';
-              width: 140%;
-              height: 2px;
-              margin-left: -70%;
-              margin-top: -1px;
-            }
-            &:after{
-              height: 140%;
-              width: 2px;
-              margin-left: -1px;
-              margin-top: -70%;
-            }
-          }
+         }
           &.full{
             transform: scale3d(0, 0, 0);
             border: 2px solid #161616;
@@ -551,7 +543,7 @@ export default {
           opacity: 1;
         }
         .vue-modal-title a.close{
-          transform: rotate3d(0,0,1,45deg) scale3d(1, 1, 1);
+          transform: scale3d(1, 1, 1);
         }
         .vue-modal-title a.full,.vue-modal-title a.normal{
           transform: scale3d(1, 1, 1);
