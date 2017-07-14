@@ -498,7 +498,7 @@ export default {
               display: inline-block;
               vertical-align: top;
             }
-         }
+          }
           &.full{
             transform: scale3d(0, 0, 0);
             border: 2px solid #161616;
