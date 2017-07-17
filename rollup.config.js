@@ -25,9 +25,9 @@ export default {
     }),
     uglify(),
     nodeResolve({ jsnext: true, main: true, browser: true }),
-    commonjs({
-      exclude: ['node_modules/vue/**', 'node_modules/lodash/**', 'node_modules/d3/**']
-    }),
+    commonjs(
+      // { exclude: ['node_modules/vue/**', 'node_modules/lodash/**', 'node_modules/d3/**'] }
+    ),
     babel({
       exclude: ['node_modules/**', 'bower_components/**']
     }),
