@@ -21,7 +21,7 @@ export default {
     vue(),
     sass({
       output: 'dist/components.css',
-      processor: css => postcss([autoprefixer, clean]).process(css).then(result => result.css)
+      processor: css => postcss([autoprefixer({ browsers: ['last 20 version', 'not ie <= 8'] }), clean]).process(css).then(result => result.css)
     }),
     uglify(),
     nodeResolve({ jsnext: true, main: true, browser: true }),

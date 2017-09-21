@@ -1,3 +1,4 @@
+import 'es6-promise/auto' 
 import Vue from 'vue/dist/vue.js'
 import _ from 'lodash'
 import modalbase from './modal.vue'
