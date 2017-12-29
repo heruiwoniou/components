@@ -7,4 +7,5 @@
 >* d3
 >* es6-promise
 
-[home page](https://heruiwoniou.github.io/components/)
+Go to the home page to see the effect
+[HOME PAGE](https://heruiwoniou.github.io/components/) to 
