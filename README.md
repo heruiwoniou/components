@@ -8,4 +8,5 @@
 >* es6-promise
 
 Go to the home page to see the effect
-[HOME PAGE](https://heruiwoniou.github.io/components/) to 
+
+[HOME PAGE](https://heruiwoniou.github.io/components/)
